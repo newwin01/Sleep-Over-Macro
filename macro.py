@@ -21,13 +21,11 @@ URL = 'https://hisnet.handong.edu/'
 
 #access to the homepage
 driver.get(URL)
-
-time.sleep(5)
+time.sleep(1)
 
 # enter user data - login in to hisnet
 frame = driver.find_element(by=By.NAME, value="MainFrame")
 driver.switch_to.frame(frame)
-time.sleep(5)
 
 log_ID = driver.find_element(by = By.NAME, value = "id")
 log_ID.send_keys(hisnet_id)
@@ -36,6 +34,10 @@ log_PW = driver.find_element(by= By.NAME, value= "password")
 log_PW.send_keys(hisnet_pw)
 
 #login to hisnet by clicking
-WebDriverWait(driver,20).until(EC.element_to_be_clickable((By.XPATH,'//input[@type="image"][@src="/2012_images/intro/btn_login.gif"]'))).click()
-time.sleep(5)
+WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//input[@type="image"][@src="/2012_images/intro/btn_login.gif"]'))).click()
+time.sleep(3)
 
+#Access to RC page
+driver.execute_script('sendit12()')
+
+time.sleep(3)
