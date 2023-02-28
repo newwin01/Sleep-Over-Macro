@@ -41,8 +41,8 @@ def macro():
     log_PW.send_keys(hisnet_pw)
 
     # login to hisnet by clicking
-    WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//input[@type="image"][@src="/2012_images/intro/btn_login.gif"]'))).click()
-    time.sleep(1)
+    WebDriverWait(driver,1).until(EC.element_to_be_clickable((By.XPATH,'//input[@type="image"][@src="/2012_images/intro/btn_login.gif"]'))).click()
+    time.sleep(0.5)
 
     # access to RC page
     driver.execute_script('sendit12()')
@@ -54,17 +54,17 @@ def macro():
 
     # access to my page
     time.sleep(1)
-    WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="header"]/div/div/div[2]/ul/li[2]/a'))).click()
+    WebDriverWait(driver,1).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="header"]/div/div/div[2]/ul/li[2]/a'))).click()
 
     # access to sleepover registration page
     time.sleep(1)
-    WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="mypage"]/div[2]/div[3]/dl[3]/dd/a'))).click()
+    WebDriverWait(driver,1).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="mypage"]/div[2]/div[3]/dl[3]/dd/a'))).click()
 
     # click date
-    WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ovng_begin_dttm"]'))).click()
+    WebDriverWait(driver,1).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ovng_begin_dttm"]'))).click()
 
     CurrentDay = date.today().day
-    WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ovng_begin_dttm"]'))).click()
+    WebDriverWait(driver,1).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ovng_begin_dttm"]'))).click()
 
     time.sleep(1)
 
@@ -79,11 +79,11 @@ def macro():
 
     time.sleep(1)
 
-    WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.LINK_TEXT, str(CurrentDay)))).click()
+    WebDriverWait(driver,1).until(EC.element_to_be_clickable((By.LINK_TEXT, str(CurrentDay)))).click()
 
     # click apply
-    WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="domExeat"]/div[2]/button'))).click()
-    time.sleep(1)
+    WebDriverWait(driver,1).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="domExeat"]/div[2]/button'))).click()
+    # time.sleep(1)
 
     # wait for reloading to repeat
     # Congratulations~~
