@@ -22,7 +22,7 @@ def macro():
     # use chrome
     options = webdriver.ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    options.add_argument("headless") #make chrome to execute on background
+    options.add_argument("headless") # make chrome to execute on background
     driver = webdriver.Chrome(options=options)
 
     URL = 'https://hisnet.handong.edu/'
@@ -64,9 +64,6 @@ def macro():
     # click date
     WebDriverWait(driver,1).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ovng_begin_dttm"]'))).click()
 
-    CurrentDay = date.today().day
-    WebDriverWait(driver,1).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ovng_begin_dttm"]'))).click()
-
     time.sleep(1)
 
     # enter text - data(location; reason)
@@ -80,6 +77,7 @@ def macro():
 
     time.sleep(1)
 
+    CurrentDay = date.today().day
     WebDriverWait(driver,1).until(EC.element_to_be_clickable((By.LINK_TEXT, str(CurrentDay)))).click()
 
     # click apply
