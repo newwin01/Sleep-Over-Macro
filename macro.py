@@ -35,9 +35,22 @@ log_PW.send_keys(hisnet_pw)
 
 #login to hisnet by clicking
 WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//input[@type="image"][@src="/2012_images/intro/btn_login.gif"]'))).click()
-time.sleep(3)
+time.sleep(1)
 
 #Access to RC page
 driver.execute_script('sendit12()')
+
+#close hisnet tab and swith to open tab
+driver.close() 
+first_tab = driver.window_handles[0]
+driver.switch_to.window(window_name=first_tab )
+
+# access to my page
+time.sleep(1)
+WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="header"]/div/div/div[2]/ul/li[2]/a'))).click()
+
+#access to sleepover registration page
+time.sleep(1)
+WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="mypage"]/div[2]/div[3]/dl[3]/dd/a'))).click()
 
 time.sleep(3)
