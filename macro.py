@@ -1,56 +1,107 @@
 import time
+from datetime import datetime
+from datetime import date
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-# input = hisnet id & password
-hisnet_id = input("Enter hisnet id: ")
-hisnet_pw = input("Enter hisnet pw: ")
+def macro():
+    # input = hisnet id & password
+    hisnet_id = input("Enter hisnet id: ")
+    hisnet_pw = input("Enter hisnet pw: ")
 
-#check the info
-print(hisnet_id)
-print(hisnet_pw)
+    # input = sleepover location & reason
+    location = input("Enter the location of sleepover: ")
+    reason = input("Enter the reason of sleepover: ")
 
-# use chrome
-options = webdriver.ChromeOptions()
-options.add_experimental_option("excludeSwitches", ["enable-logging"])
-driver = webdriver.Chrome(options=options)
+    # check the info
+    log_writer(0, hisnet_id)
+    log_writer(0, hisnet_pw)
 
-URL = 'https://hisnet.handong.edu/'
+    # use chrome
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    driver = webdriver.Chrome(options=options)
 
-#access to the homepage
-driver.get(URL)
-time.sleep(1)
+    URL = 'https://hisnet.handong.edu/'
 
-# enter user data - login in to hisnet
-frame = driver.find_element(by=By.NAME, value="MainFrame")
-driver.switch_to.frame(frame)
+    # access to the homepage
+    driver.get(URL)
+    time.sleep(1)
 
-log_ID = driver.find_element(by = By.NAME, value = "id")
-log_ID.send_keys(hisnet_id)
+    # enter user data - login in to hisnet
+    frame = driver.find_element(by=By.NAME, value="MainFrame")
+    driver.switch_to.frame(frame)
 
-log_PW = driver.find_element(by= By.NAME, value= "password")
-log_PW.send_keys(hisnet_pw)
+    log_ID = driver.find_element(by = By.NAME, value = "id")
+    log_ID.send_keys(hisnet_id)
 
-#login to hisnet by clicking
-WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//input[@type="image"][@src="/2012_images/intro/btn_login.gif"]'))).click()
-time.sleep(1)
+    log_PW = driver.find_element(by= By.NAME, value= "password")
+    log_PW.send_keys(hisnet_pw)
 
-#Access to RC page
-driver.execute_script('sendit12()')
+    # login to hisnet by clicking
+    WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//input[@type="image"][@src="/2012_images/intro/btn_login.gif"]'))).click()
+    time.sleep(1)
 
-#close hisnet tab and swith to open tab
-driver.close() 
-first_tab = driver.window_handles[0]
-driver.switch_to.window(window_name=first_tab )
+    # access to RC page
+    driver.execute_script('sendit12()')
 
-# access to my page
-time.sleep(1)
-WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="header"]/div/div/div[2]/ul/li[2]/a'))).click()
+    # close hisnet tab and swith to open tab
+    driver.close() 
+    first_tab = driver.window_handles[0]
+    driver.switch_to.window(window_name=first_tab )
 
-#access to sleepover registration page
-time.sleep(1)
-WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="mypage"]/div[2]/div[3]/dl[3]/dd/a'))).click()
+    # access to my page
+    time.sleep(1)
+    WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="header"]/div/div/div[2]/ul/li[2]/a'))).click()
 
-time.sleep(3)
+    # access to sleepover registration page
+    time.sleep(1)
+    WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="mypage"]/div[2]/div[3]/dl[3]/dd/a'))).click()
+
+    # click date
+    WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ovng_begin_dttm"]'))).click()
+
+    CurrentDay = date.today().day
+    WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ovng_begin_dttm"]'))).click()
+
+    time.sleep(1)
+
+    # enter text - data(location; reason)
+    log_writer(0, location)
+    log_writer(0, reason)
+    conjunction = "; "
+    data = location + conjunction + reason
+
+    Reason_text = driver.find_element(by = By.NAME, value = "ovng_resn")
+    Reason_text.send_keys(data)
+
+    time.sleep(1)
+
+    # click apply
+    WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="domExeat"]/div[2]/button'))).click()
+    time.sleep(1)
+
+    # wait for reloading to repeat
+    # Congratulations~~
+    time.sleep(3)
+
+
+
+# 0 for INFO, 1 for WARN, 2 for ERROR
+def log_writer(log_code:int, msg:str):
+    message = ''
+    if log_code == 0:
+        message += ':::INFO:::|'
+    elif log_code == 1:
+        message += ':::WARN:::|'
+    elif log_code == 2:
+        message += ':::ERROR:::|'
+    message += datetime.now().strftime("%d/%m/%Y %H:%M:%S") + '|' + msg
+    print(message)
+
+
+
+if __name__ == '__main__':
+    macro()
