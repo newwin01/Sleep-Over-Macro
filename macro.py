@@ -71,13 +71,15 @@ def macro():
     # enter text - data(location; reason)
     log_writer(0, location)
     log_writer(0, reason)
-    conjunction = "; "
+    conjunction = "에서 "
     data = location + conjunction + reason
 
     Reason_text = driver.find_element(by = By.NAME, value = "ovng_resn")
     Reason_text.send_keys(data)
 
     time.sleep(1)
+
+    WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.LINK_TEXT, str(CurrentDay)))).click()
 
     # click apply
     WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="domExeat"]/div[2]/button'))).click()
