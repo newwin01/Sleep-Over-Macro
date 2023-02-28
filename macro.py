@@ -22,6 +22,7 @@ def macro():
     # use chrome
     options = webdriver.ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    options.add_argument("headless") #make chrome to execute on background
     driver = webdriver.Chrome(options=options)
 
     URL = 'https://hisnet.handong.edu/'
